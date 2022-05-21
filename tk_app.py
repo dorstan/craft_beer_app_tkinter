@@ -175,7 +175,7 @@ class Application(tk.Tk):
         super().__init__(*args, **kwargs)
         self.title("Bière Artisanale")
         self.geometry("850x1000")
-        self.resizable(width=False, height=False)
+        #self.resizable(width=False, height=False)
       
         ttk.Label(
             self,
