@@ -141,11 +141,11 @@ class DataRecordForm(tk.Frame):
         self.inputs["Notes"] = LabelInput(beer_type, "Notes", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes"].grid(row=0, column=3)
 
-        self.inputs["Notes"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
-        self.inputs["Notes"].grid(row=1, column=3)
+        self.inputs["Notes2"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes2"].grid(row=1, column=3)
 
-        self.inputs["Notes"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
-        self.inputs["Notes"].grid(row=2, column=3, sticky = (tk.W + tk.E))
+        self.inputs["Notes2"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes2"].grid(row=2, column=3, sticky = (tk.W + tk.E))
 
         #default the form
         self.reset()
@@ -174,7 +174,7 @@ class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.title("Bière Artisanale")
-        self.geometry("850x1000+800+950")
+        self.geometry("850x1000")
         self.resizable(width=False, height=False)
       
         ttk.Label(
@@ -215,7 +215,7 @@ class Application(tk.Tk):
 
         self.records_saved += 1
         self.status.set(
-            "{} records saved this session".format(self.records_saved))
+            "La recette no.{} a été sauveguardée".format(self.records_saved))
         self.recordform.reset()
 
 if __name__ == "__main__":
