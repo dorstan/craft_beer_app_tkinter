@@ -32,12 +32,16 @@ class LabelInput(tk.Frame):
         super().grid(sticky=sticky, **kwargs)
 
     def get(self):
-        if self.variable:
-            return self.variable.get()
-        elif type(self.input) == tk.Text:
-            return self.input.get('1.0', tk.END)
-        else:
-            return self.input.get()
+        try:
+            if self.variable:
+                return self.variable.get()
+            elif type(self.input) == tk.Text:
+                return self.input.get('1.0', tk.END)
+            else:
+                return self.input.get()
+        except (TypeError, tk.TclError):
+              # happens when numeric fields are empty.
+              return ''
 
     def set(self, value, *args, **kwargs):
         if type(self.variable) == tk.BooleanVar:
@@ -63,8 +67,6 @@ class DataRecordForm(tk.Frame):
         # A dict to keep track of input widgets
         self.inputs = {}
 
-        # This list keeps the frames name
-
         # Constructing the Widgets 
         # ---------------------------------------------------------
 
@@ -84,69 +86,69 @@ class DataRecordForm(tk.Frame):
         # Constructing the Widgets 
         # --------------------------------------------------------------
 
-        self.inputs["Date"] = LabelInput(record, "Date", input_var=tk.StringVar)
+        self.inputs["Date"] = LabelInput(record, "Date", input_var=tk.StringVar())
         self.inputs["Date"].grid(row=0, column=0)
         
-        self.inputs["Base Bière"] = LabelInput(record, "Base Bière", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values":["Claire 80%", "Amber 78%", "Dark 76%"]})
+        self.inputs["Base Bière"] = LabelInput(record, "Base Bière", input_class=ttk.Combobox, input_var=tk.StringVar() ,input_args={"values":["Claire 80%", "Amber 78%", "Dark 76%"]})
         self.inputs["Base Bière"].grid(row=0, column=1) 
 
-        self.inputs["Essai d/h"] = LabelInput(record, "Essai d/h", input_var=tk.StringVar)
+        self.inputs["Essai d/h"] = LabelInput(record, "Essai d/h", input_var=tk.StringVar())
         self.inputs["Essai d/h"].grid(row=0, column=2)
 
-        self.inputs["Rdm Instalation"] = LabelInput(record, "Rdm Instalation", input_var=tk.IntVar)
+        self.inputs["Rdm Instalation"] = LabelInput(record, "Rdm Instalation", input_var=tk.IntVar())
         self.inputs["Rdm Instalation"].grid(row=0, column=3)
 
-        self.inputs["Volume Fin Ebullition"] = LabelInput(record, "Volume Fin Ebullition", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(10, 51))})
+        self.inputs["Volume Fin Ebullition"] = LabelInput(record, "Volume Fin Ebullition", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(10, 51))})
         self.inputs["Volume Fin Ebullition"].grid(row=1, column=0)
 
-        self.inputs["Densite de maiche (°P)"] = LabelInput(record, "Densite de maiche (°P)", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(0, 16))})
+        self.inputs["Densite de maiche (°P)"] = LabelInput(record, "Densite de maiche (°P)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(0, 16))})
         self.inputs["Densite de maiche (°P)"].grid(row=1, column=1)
 
-        self.inputs["Couleur en EBC"] = LabelInput(record, "Couleur en EBC", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(1, 80))})
+        self.inputs["Couleur en EBC"] = LabelInput(record, "Couleur en EBC", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["Couleur en EBC"].grid(row=1, column=2)
 
-        self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume en IBU", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(1, 80))})
+        self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume en IBU", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["Amertume en IBU"].grid(row=1, column=3)
 
         # Second Frame
-        self.inputs["Type Grain"] = LabelInput(beer_type, "Type Grain", )
+        self.inputs["Type Grain"] = LabelInput(beer_type, "Type Grain", input_var=tk.StringVar())
         self.inputs["Type Grain"].grid(row=0, column=0)
 
-        self.inputs["Type Grain2"] = LabelInput(beer_type, "", input_var=tk.StringVar)
+        self.inputs["Type Grain2"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Type Grain2"].grid(row=1, column=0)
 
-        self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_var=tk.StringVar)
+        self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Type Grain3"].grid(row=2, column=0)
 
-        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Masse grains (Mgrain)", input_var=tk.StringVar)
+        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Masse grains (Mgrain)", input_var=tk.StringVar())
         self.inputs["Masse grains (Mgrain)"].grid(row=0, column=1)
 
-        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_var=tk.StringVar)
+        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Masse grains (Mgrain)2"].grid(row=1, column=1)
 
-        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_var=tk.StringVar)
+        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Masse grains (Mgrain)3"].grid(row=2, column=1)
 
-        self.inputs["EBCgr"] = LabelInput(beer_type, "EBCgr", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(1, 80))})
+        self.inputs["EBCgr"] = LabelInput(beer_type, "EBCgr", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["EBCgr"].grid(row=0, column=2)
 
-        self.inputs["EBCgr2"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(1, 80))})
+        self.inputs["EBCgr2"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["EBCgr2"].grid(row=1, column=2)
 
-        self.inputs["EBCgr3"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.IntVar ,input_args={"values": list(range(1, 80))})
+        self.inputs["EBCgr3"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["EBCgr3"].grid(row=2, column=2)
 
-        self.inputs["Notes"] = LabelInput(beer_type, "Notes", input_class=tk.Entry)
+        self.inputs["Notes"] = LabelInput(beer_type, "Notes", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes"].grid(row=0, column=3)
 
-        self.inputs["Notes"] = LabelInput(beer_type, "", input_class=tk.Entry)
+        self.inputs["Notes"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes"].grid(row=1, column=3)
 
-        self.inputs["Notes"] = LabelInput(beer_type, "", input_class=tk.Entry)
+        self.inputs["Notes"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes"].grid(row=2, column=3, sticky = (tk.W + tk.E))
 
         #default the form
-        #self.reset()
+        self.reset()
 
     def get(self):
         """Retrieve data from form as a dict"""
@@ -200,7 +202,7 @@ class Application(tk.Tk):
         # If it doesnt' exist, create it,
         # otherwise just append to the existing file
         datestring = datetime.today().strftime("%Y-%m-%d")
-        filename = "abq_data_record_{}.csv".format(datestring)
+        filename = "/Users/dorinstanchescu/Kode/craft_beer_app_tkinter/beer_log{}.csv".format(datestring)
         newfile = not os.path.exists(filename)
 
         data = self.recordform.get()
