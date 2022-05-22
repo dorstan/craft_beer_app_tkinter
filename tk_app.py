@@ -3,8 +3,9 @@
 from datetime import datetime
 import os
 import csv
+from sqlite3 import Date
 import tkinter as tk
-from tkinter import ttk
+from tkinter import RAISED, ttk
 
 class LabelInput(tk.Frame):
     """A widget containing a label and input together."""
@@ -176,6 +177,7 @@ class Application(tk.Tk):
         self.title("Bière Artisanale")
         self.geometry("850x1000")
         #self.resizable(width=False, height=False)
+
       
         ttk.Label(
             self,
@@ -185,16 +187,68 @@ class Application(tk.Tk):
         self.recordform = DataRecordForm(self)
         self.recordform.grid(row=1, padx=10)
 
+    
+
+
+        # Label with results-----------------------------------------------------------
+
+        self.data_set=tk.StringVar()
+        self.data_set.set("Chargement...")
+        self.visual_data = ttk.Label(self, textvariable=self.data_set)
+        self.visual_data.grid(sticky=tk.W, row=3, column=0)
+
+        # ------------------------------------------------------------------------------
+
+        # BUTTON to show results
+        self.visual_button = ttk.Button(self, text="Equilibrer la recette", command=self.return_data)
+        self.visual_button.grid(sticky=tk.W, row=2, column=0, padx=10)
+
+
+
         self.savebutton = ttk.Button(self, text="Save", command=self.on_save)
-        self.savebutton.grid(sticky=tk.E, row=2, padx=10)
+        self.savebutton.grid(sticky=tk.E, row=4, padx=10)
 
         # status bar
         self.status = tk.StringVar()
         self.statusbar = ttk.Label(self, textvariable=self.status)
-        self.statusbar.grid(sticky=(tk.W + tk.E), row=3, padx=10)
+        self.statusbar.grid(sticky=(tk.W + tk.E), row=5, padx=10)
 
         self.records_saved = 0
+    
+    def return_data(self):
+        """Calculates the formula for grain mass"""
+        if self.recordform.get():
+            for x, y in self.recordform.get().items():
+                if x == "Densite de maiche (°P)":
+                    self.maiche = int(y)
+                elif x == "Volume Fin Ebullition":
+                    self.fin_ebullition = int(y)
+                elif x == "Rdm Instalation":
+                    self.instalation = int(y)
+                elif x == "Base Bière":
+                    if y == "Claire 80%":
+                        self.base_bière = 80
+                    elif y == "Amber 78%":
+                        self.base_bière = 78
+                    else:
+                        self.base_bière = 76
+            self.result = (self.maiche*100*self.fin_ebullition)/(self.instalation*self.base_bière)
+            self.start_volume = self.fin_ebullition * 1.085
+            self.water_volume = self.result * 3
+            self.washing_volume = (self.start_volume-self.water_volume+self.result)*1.2
+            
 
+            self.data_set.set(f"""Quantité nécessaire de malt: {self.result:.1f}kg.
+Volume d'eau nécessaire au début débullition: {self.start_volume:.1f}litres.
+Volume d'eau nécessaire à l'empatage: {self.water_volume:.1f} litres.
+Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.""")
+        else:
+            self.data_set.set("Chargement...")
+
+
+
+
+    
     def on_save(self):
         """Handles save button clicks"""
 
