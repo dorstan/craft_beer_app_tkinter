@@ -6,6 +6,8 @@ import csv
 from sqlite3 import Date
 import tkinter as tk
 from tkinter import RAISED, ttk
+import math as mt
+from decimal import Decimal
 
 class LabelInput(tk.Frame):
     """A widget containing a label and input together."""
@@ -121,13 +123,13 @@ class DataRecordForm(tk.Frame):
         self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Type Grain3"].grid(row=2, column=0)
 
-        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Masse grains (Mgrain)", input_var=tk.StringVar())
+        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Masse grains (Mgrain)", input_var=tk.IntVar())
         self.inputs["Masse grains (Mgrain)"].grid(row=0, column=1)
 
-        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_var=tk.StringVar())
+        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_var=tk.IntVar())
         self.inputs["Masse grains (Mgrain)2"].grid(row=1, column=1)
 
-        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
+        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_var=tk.IntVar())
         self.inputs["Masse grains (Mgrain)3"].grid(row=2, column=1)
 
         self.inputs["EBCgr"] = LabelInput(beer_type, "EBCgr", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
@@ -220,11 +222,11 @@ class Application(tk.Tk):
         if self.recordform.get():
             for x, y in self.recordform.get().items():
                 if x == "Densite de maiche (°P)":
-                    self.maiche = int(y)
+                    self.maiche = float(y)
                 elif x == "Volume Fin Ebullition":
-                    self.fin_ebullition = int(y)
+                    self.fin_ebullition = float(y)
                 elif x == "Rdm Instalation":
-                    self.instalation = int(y)
+                    self.instalation = float(y)
                 elif x == "Base Bière":
                     if y == "Claire 80%":
                         self.base_bière = 80
@@ -236,14 +238,64 @@ class Application(tk.Tk):
             self.start_volume = self.fin_ebullition * 1.085
             self.water_volume = self.result * 3
             self.washing_volume = (self.start_volume-self.water_volume+self.result)*1.2
+
+            self.beer_color = self.ebc_color()
             
 
             self.data_set.set(f"""Quantité nécessaire de malt: {self.result:.1f}kg.
 Volume d'eau nécessaire au début débullition: {self.start_volume:.1f}litres.
 Volume d'eau nécessaire à l'empatage: {self.water_volume:.1f} litres.
-Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.""")
+Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.
+Couleur du moût est de {self.beer_color:.1f} EBC.""")
         else:
             self.data_set.set("Chargement...")
+
+    def ebc_color(self):
+        self.sum_ebc = []
+        self.grain_mass_items = {}
+
+
+        for x, y in self.recordform.get().items():
+            self.grain_mass_items[x] = y
+            if x == "Volume Fin Ebullition":
+                self.fin_ebullition = float(y)
+
+       
+        
+        self.grain_mass_list = ["Masse grains (Mgrain)", "Masse grains (Mgrain)2", "Masse grains (Mgrain)3"]
+        self.ebc_list = ["EBCgr", "EBCgr2", "EBCgr3"]
+        
+        self.result_grain = []
+        for gr_mass in self.grain_mass_list:
+            if self.grain_mass_items[gr_mass]:
+                self.result_grain.append(self.grain_mass_items[gr_mass])
+
+        
+        self.result_ebc = []
+        for ebc_mass in self.ebc_list:
+            if self.grain_mass_items[ebc_mass]:
+                self.result_ebc.append(self.grain_mass_items[ebc_mass])
+
+
+
+        for item1, item2 in zip(self.result_grain, self.result_ebc):
+            self.sum_item = item1*item2
+            self.sum_ebc.append(self.sum_item)
+        self.formula_total = mt.fsum(self.sum_ebc)
+        self.formula_total = self.formula_total *7.5/self.fin_ebullition
+
+        return Decimal(self.formula_total)
+
+        
+
+
+
+            
+
+
+
+
+            
 
 
 
