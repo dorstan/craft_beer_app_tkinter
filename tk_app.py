@@ -78,15 +78,15 @@ class DataRecordForm(tk.Frame):
         beer_type = tk.LabelFrame(self, text="Ingrédients - Composition & Répartition")
         beer_type.grid(row=1, column=0, sticky=(tk.W + tk.E))
 
-        malt_type = tk.LabelFrame(self, text="Variété de Malt")
-        malt_type.grid(row=2, column=0, sticky=(tk.W + tk.E))
+        hops_type = tk.LabelFrame(self, text="Houblon - Détermination de l'amertume")
+        hops_type.grid(row=2, column=0, sticky=(tk.W + tk.E))
 
-        hops_type = tk.LabelFrame(self, text="Houblon")
-        hops_type.grid(row=3, column=0, sticky=(tk.W + tk.E))
+        malt_type = tk.LabelFrame(self, text="Variété de Malt")
+        malt_type.grid(row=3, column=0, sticky=(tk.W + tk.E))
 
     
         # Constructing the Widgets 
-        # --------------------------------------------------------------
+        # Bière - Feuille de Spécifications --------------------------------------------------------------
 
         self.inputs["Essai N°"] = LabelInput(record, "Essai N° d/h", input_var=tk.StringVar())
         self.inputs["Essai N°"].grid(row=0, column=0)
@@ -112,14 +112,15 @@ class DataRecordForm(tk.Frame):
         self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume (IBU)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["Amertume en IBU"].grid(row=1, column=3)
 
-        # Second Frame
-        self.inputs["Type Grain"] = LabelInput(beer_type, "Choix du Malt", input_var=tk.StringVar())
+    
+        # Ingrédients - Composition & Répartition ----------------------------------------
+        self.inputs["Type Grain"] = LabelInput(beer_type, "Choix du Malt", input_class= tk.Entry, input_var=tk.StringVar())
         self.inputs["Type Grain"].grid(row=0, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Type Grain2"] = LabelInput(beer_type, "", input_var=tk.StringVar())
+        self.inputs["Type Grain2"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
         self.inputs["Type Grain2"].grid(row=1, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
+        self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
         self.inputs["Type Grain3"].grid(row=2, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Notes"] = LabelInput(beer_type, "Spécifications", input_class=tk.Entry, input_var=tk.StringVar())
@@ -149,7 +150,26 @@ class DataRecordForm(tk.Frame):
         self.inputs["EBCgr3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 1, "to": 80, "increment": 1})
         self.inputs["EBCgr3"].grid(row=2, column=3)
 
+        # Houblon -----------------------------------
+        self.inputs["Choix du Houblon"] = LabelInput(hops_type, "Choix du Houblon", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Choix du Houblon"].grid(row=0, column=0, sticky = (tk.W + tk.E))
 
+        self.inputs["Choix du Houblon2"] = LabelInput(hops_type, "", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Choix du Houblon2"].grid(row=1, column=0, sticky = (tk.W + tk.E))
+
+        self.inputs["Choix du Houblon3"] = LabelInput(hops_type, "", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Choix du Houblon3"].grid(row=2, column=0, sticky = (tk.W + tk.E))
+
+        self.inputs["Notes_houblon"] = LabelInput(hops_type, "Spécifications", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes_houblon"].grid(row=0, column=1, sticky = (tk.W + tk.E))
+
+        self.inputs["Notes_houblon2"] = LabelInput(hops_type, "", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes_houblon2"].grid(row=1, column=1, sticky = (tk.W + tk.E))
+
+        self.inputs["Notes_houblon3"] = LabelInput(hops_type, "", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes_houblon3"].grid(row=2, column=1, sticky = (tk.W + tk.E))
+
+        
 
         #default the form
         self.reset()
