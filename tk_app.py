@@ -7,7 +7,6 @@ from sqlite3 import Date
 import tkinter as tk
 from tkinter import RAISED, ttk
 import math as mt
-from decimal import Decimal
 
 class LabelInput(tk.Frame):
     """A widget containing a label and input together."""
@@ -285,7 +284,7 @@ Couleur du moût est de {self.beer_color:.1f} EBC.""")
         self.multiplicator = 7.5
         self.formula_total = self.formula_total * self.multiplicator/self.fin_ebullition
 
-        return Decimal(self.formula_total)
+        return self.formula_total
 
         
 
