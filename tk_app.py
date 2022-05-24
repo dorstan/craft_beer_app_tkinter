@@ -88,8 +88,8 @@ class DataRecordForm(tk.Frame):
         # Constructing the Widgets 
         # --------------------------------------------------------------
 
-        self.inputs["Date"] = LabelInput(record, "Essai N° d/h", input_var=tk.StringVar())
-        self.inputs["Date"].grid(row=0, column=0)
+        self.inputs["Essai N°"] = LabelInput(record, "Essai N° d/h", input_var=tk.StringVar())
+        self.inputs["Essai N°"].grid(row=0, column=0)
 
         self.inputs["Rdm Instalation"] = LabelInput(record, "Rendement Instalation (%)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values":[70, 75, 80, 85, 90, 95, 100]})
         self.inputs["Rdm Instalation"].grid(row=0, column=1)
@@ -128,8 +128,8 @@ class DataRecordForm(tk.Frame):
         self.inputs["Notes2"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes2"].grid(row=1, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Notes2"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
-        self.inputs["Notes2"].grid(row=2, column=1, sticky = (tk.W + tk.E))
+        self.inputs["Notes3"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes3"].grid(row=2, column=1, sticky = (tk.W + tk.E))
 
         self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Quantité (KG)", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
         self.inputs["Masse grains (Mgrain)"].grid(row=0, column=2)
@@ -178,14 +178,13 @@ class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.title("Bière Artisanale")
-        self.geometry("850x1000")
+        self.geometry("1700x1000")
         #self.resizable(width=False, height=False)
 
       
-        ttk.Label(
-            self,
-            text="Bière Artisanale",
-            font=("TkDefaultFont", 16)).grid(row=0)
+        self.label = ttk.Label(self, text="Bière Artisanale", font=("TkDefaultFont", 16))
+        self.label.grid(row=0, padx=10)
+        
 
         self.recordform = DataRecordForm(self)
         self.recordform.grid(row=1, padx=10)
@@ -193,18 +192,21 @@ class Application(tk.Tk):
     
 
 
+
+
+        # BUTTON to show results
+        self.visual_button = ttk.Button(self, text="Balance", command=self.return_data)
+        self.visual_button.grid(row=2, column=0, sticky = tk.W, padx=10)
+
+
         # Label with results-----------------------------------------------------------
 
         self.data_set=tk.StringVar()
         self.data_set.set("Chargement...")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
-        self.visual_data.grid(sticky=tk.W, row=3, column=0)
+        self.visual_data.grid(row=3, column=0, sticky=(tk.W+tk.E), padx=10)
 
         # ------------------------------------------------------------------------------
-
-        # BUTTON to show results
-        self.visual_button = ttk.Button(self, text="Balance", command=self.return_data)
-        self.visual_button.grid(sticky=tk.W, row=2, column=0, padx=10)
 
 
 
