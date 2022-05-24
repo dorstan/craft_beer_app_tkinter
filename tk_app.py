@@ -123,22 +123,22 @@ class DataRecordForm(tk.Frame):
         self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Type Grain3"].grid(row=2, column=0)
 
-        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Masse grains (Mgrain)", input_var=tk.IntVar())
+        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Masse grains (Mgrain)", input_var=tk.StringVar())
         self.inputs["Masse grains (Mgrain)"].grid(row=0, column=1)
 
-        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_var=tk.IntVar())
+        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Masse grains (Mgrain)2"].grid(row=1, column=1)
 
-        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_var=tk.IntVar())
+        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_var=tk.StringVar())
         self.inputs["Masse grains (Mgrain)3"].grid(row=2, column=1)
 
-        self.inputs["EBCgr"] = LabelInput(beer_type, "EBCgr", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
+        self.inputs["EBCgr"] = LabelInput(beer_type, "EBCgr", input_class=ttk.Combobox, input_var=tk.StringVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["EBCgr"].grid(row=0, column=2)
 
-        self.inputs["EBCgr2"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
+        self.inputs["EBCgr2"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.StringVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["EBCgr2"].grid(row=1, column=2)
 
-        self.inputs["EBCgr3"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
+        self.inputs["EBCgr3"] = LabelInput(beer_type, "", input_class=ttk.Combobox, input_var=tk.StringVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["EBCgr3"].grid(row=2, column=2)
 
         self.inputs["Notes"] = LabelInput(beer_type, "Notes", input_class=tk.Entry, input_var=tk.StringVar())
@@ -279,10 +279,11 @@ Couleur du moût est de {self.beer_color:.1f} EBC.""")
 
 
         for item1, item2 in zip(self.result_grain, self.result_ebc):
-            self.sum_item = item1*item2
+            self.sum_item = float(item1)*float(item2)
             self.sum_ebc.append(self.sum_item)
         self.formula_total = mt.fsum(self.sum_ebc)
-        self.formula_total = self.formula_total *7.5/self.fin_ebullition
+        self.multiplicator = 7.5
+        self.formula_total = self.formula_total * self.multiplicator/self.fin_ebullition
 
         return Decimal(self.formula_total)
 
