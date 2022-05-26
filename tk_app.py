@@ -249,13 +249,13 @@ class Application(tk.Tk):
         self.data_set=tk.StringVar()
         self.data_set.set("Chargement...")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
-        self.visual_data.grid(row=3, sticky=tk.W, padx=10)
+        self.visual_data.grid(row=3, sticky=(tk.W+tk.N), padx=10)
 
 
         self.balance_set=tk.StringVar()
         self.balance_set.set("Text balance...")
         self.balance_data = ttk.Label(self, textvariable=self.balance_set)
-        self.balance_data.grid(sticky=tk.E, row=3, padx=10)
+        self.balance_data.grid(sticky=(tk.E+tk.N), row=3, padx=10)
 
         # ------------------------------------------------------------------------------
 
@@ -298,10 +298,13 @@ class Application(tk.Tk):
             self.data_set.set(f"""Quantité nécessaire de malt:\n {self.result:.1f}kg.
 Volume d'eau nécessaire au début\n d'ébullition: {self.start_volume:.1f}litres.
 Volume d'eau nécessaire à l'empatage:\ {self.water_volume:.1f} litres.
-Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.
-Couleur du moût est de {self.beer_color:.1f} EBC.""")
+Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.""")
         else:
             self.data_set.set("Chargement...")
+
+    def return_recette(self):
+        self.ebc_result = self.ebc_color()
+        self.balance_set.set(f"Couleur du moût est de {self.ebc_result:.1f} EBC.")
 
     def ebc_color(self):
         self.sum_ebc = []
@@ -341,8 +344,7 @@ Couleur du moût est de {self.beer_color:.1f} EBC.""")
         return self.formula_total
 
             
-    def return_recette(self):
-        pass
+
 
 
 
