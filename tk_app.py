@@ -78,43 +78,43 @@ class DataRecordForm(tk.Frame):
         beer_type = tk.LabelFrame(self, text="Ingrédients - Composition & Répartition")
         beer_type.grid(row=1, column=0, sticky=(tk.W + tk.E))
 
-        hops_type = tk.LabelFrame(self, text="Houblon - Détermination de l'amertume")
-        hops_type.grid(row=2, column=0, sticky=(tk.W + tk.E))
+        #hops_type = tk.LabelFrame(self, text="Houblon - Détermination de l'amertume")
+        #hops_type.grid(row=2, column=0, sticky=(tk.W + tk.E))
 
-        malt_type = tk.LabelFrame(self, text="Variété de Malt")
-        malt_type.grid(row=3, column=0, sticky=(tk.W + tk.E))
+        #malt_type = tk.LabelFrame(self, text="Variété de Malt")
+        #malt_type.grid(row=3, column=0, sticky=(tk.W + tk.E))
 
     
         # Constructing the Widgets 
         # Bière - Feuille de Spécifications --------------------------------------------------------------
 
         self.inputs["Essai N°"] = LabelInput(record, "Essai N° d/h", input_var=tk.StringVar())
-        self.inputs["Essai N°"].grid(row=0, column=0)
+        self.inputs["Essai N°"].grid(row=0, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Rdm Instalation"] = LabelInput(record, "Rendement Instalation (%)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values":[70, 75, 80, 85, 90, 95, 100]})
-        self.inputs["Rdm Instalation"].grid(row=0, column=1)
+        self.inputs["Rdm Instalation"].grid(row=0, column=1, sticky = (tk.W + tk.E))
         
         self.inputs["Base Bière"] = LabelInput(record, "Base Bière", input_class=ttk.Combobox, input_var=tk.StringVar() ,input_args={"values":["Claire 80%", "Amber 78%", "Dark 76%"]})
-        self.inputs["Base Bière"].grid(row=0, column=2) 
+        self.inputs["Base Bière"].grid(row=0, column=2, sticky = (tk.W + tk.E)) 
 
         self.inputs["Couleur en EBC"] = LabelInput(record, "Couleur Recherchée (EBC)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
-        self.inputs["Couleur en EBC"].grid(row=0, column=3)
+        self.inputs["Couleur en EBC"].grid(row=0, column=3, sticky = (tk.W + tk.E))
 
         self.inputs["Essai d/h"] = LabelInput(record, "Essai d/h", input_var=tk.StringVar())
-        self.inputs["Essai d/h"].grid(row=1, column=0)
+        self.inputs["Essai d/h"].grid(row=1, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Volume Fin Ebullition"] = LabelInput(record, "Qantité Bière (L)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(10, 51))})
-        self.inputs["Volume Fin Ebullition"].grid(row=1, column=1)
+        self.inputs["Volume Fin Ebullition"].grid(row=1, column=1, sticky = (tk.W + tk.E))
 
         self.inputs["Densite de maiche (°P)"] = LabelInput(record, "Densité de Maiche (°P)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(0, 16))})
-        self.inputs["Densite de maiche (°P)"].grid(row=1, column=2)
+        self.inputs["Densite de maiche (°P)"].grid(row=1, column=2, sticky = (tk.W + tk.E))
 
         self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume (IBU)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
-        self.inputs["Amertume en IBU"].grid(row=1, column=3)
+        self.inputs["Amertume en IBU"].grid(row=1, column=3, sticky = (tk.W + tk.E))
 
     
         # Ingrédients - Composition & Répartition ----------------------------------------
-        self.inputs["Type Grain"] = LabelInput(beer_type, "Choix du Malt", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Type Grain"] = LabelInput(beer_type, "Choix du Malt\n", input_class= tk.Entry, input_var=tk.StringVar())
         self.inputs["Type Grain"].grid(row=0, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Type Grain2"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
@@ -123,7 +123,7 @@ class DataRecordForm(tk.Frame):
         self.inputs["Type Grain3"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
         self.inputs["Type Grain3"].grid(row=2, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Notes"] = LabelInput(beer_type, "Spécifications", input_class=tk.Entry, input_var=tk.StringVar())
+        self.inputs["Notes"] = LabelInput(beer_type, "Spécifications\n", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes"].grid(row=0, column=1, sticky = (tk.W + tk.E))
 
         self.inputs["Notes2"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
@@ -132,43 +132,61 @@ class DataRecordForm(tk.Frame):
         self.inputs["Notes3"] = LabelInput(beer_type, "", input_class=tk.Entry, input_var=tk.StringVar())
         self.inputs["Notes3"].grid(row=2, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Quantité (KG)", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
-        self.inputs["Masse grains (Mgrain)"].grid(row=0, column=2)
-
-        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
-        self.inputs["Masse grains (Mgrain)2"].grid(row=1, column=2)
-
-        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
-        self.inputs["Masse grains (Mgrain)3"].grid(row=2, column=2)
-
-        self.inputs["EBCgr"] = LabelInput(beer_type, "Couleur (EBC)", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 1, "to": 80, "increment": 1})
-        self.inputs["EBCgr"].grid(row=0, column=3)
+        self.inputs["EBCgr"] = LabelInput(beer_type, "Couleur (EBC)\n", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 1, "to": 80, "increment": 1})
+        self.inputs["EBCgr"].grid(row=0, column=2, sticky = (tk.W + tk.E))
 
         self.inputs["EBCgr2"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 1, "to": 80, "increment": 1})
-        self.inputs["EBCgr2"].grid(row=1, column=3)
+        self.inputs["EBCgr2"].grid(row=1, column=2, sticky = (tk.W + tk.E))
 
         self.inputs["EBCgr3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 1, "to": 80, "increment": 1})
-        self.inputs["EBCgr3"].grid(row=2, column=3)
+        self.inputs["EBCgr3"].grid(row=2, column=2, sticky = (tk.W + tk.E))
+
+        self.inputs["Masse grains (Mgrain)"] = LabelInput(beer_type, "Quantité (kg.)\n", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
+        self.inputs["Masse grains (Mgrain)"].grid(row=0, column=3, sticky = (tk.W + tk.E))
+
+        self.inputs["Masse grains (Mgrain)2"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
+        self.inputs["Masse grains (Mgrain)2"].grid(row=1, column=3, sticky = (tk.W + tk.E))
+
+        self.inputs["Masse grains (Mgrain)3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 1000, "increment": .1})
+        self.inputs["Masse grains (Mgrain)3"].grid(row=2, column=3, sticky = (tk.W + tk.E))
+
 
         # Houblon -----------------------------------
-        self.inputs["Choix du Houblon"] = LabelInput(hops_type, "Choix du Houblon", input_class= tk.Entry, input_var=tk.StringVar())
-        self.inputs["Choix du Houblon"].grid(row=0, column=0, sticky = (tk.W + tk.E))
+        self.inputs["Choix du Houblon"] = LabelInput(beer_type, "Nom Houblon\n(pellet/cône)", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Choix du Houblon"].grid(row=3, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Choix du Houblon2"] = LabelInput(hops_type, "", input_class= tk.Entry, input_var=tk.StringVar())
-        self.inputs["Choix du Houblon2"].grid(row=1, column=0, sticky = (tk.W + tk.E))
+        self.inputs["Choix du Houblon2"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Choix du Houblon2"].grid(row=4, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Choix du Houblon3"] = LabelInput(hops_type, "", input_class= tk.Entry, input_var=tk.StringVar())
-        self.inputs["Choix du Houblon3"].grid(row=2, column=0, sticky = (tk.W + tk.E))
+        self.inputs["Choix du Houblon3"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
+        self.inputs["Choix du Houblon3"].grid(row=5, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Notes_houblon"] = LabelInput(hops_type, "Spécifications", input_class=tk.Entry, input_var=tk.StringVar())
-        self.inputs["Notes_houblon"].grid(row=0, column=1, sticky = (tk.W + tk.E))
+        self.inputs["Acides Alpha"] = LabelInput(beer_type, "Acides Alpha (%)\n", input_class=tk.Spinbox, input_var=tk.IntVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
+        self.inputs["Acides Alpha"].grid(row=3, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Notes_houblon2"] = LabelInput(hops_type, "", input_class=tk.Entry, input_var=tk.StringVar())
-        self.inputs["Notes_houblon2"].grid(row=1, column=1, sticky = (tk.W + tk.E))
+        self.inputs["Acides Alpha2"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.IntVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
+        self.inputs["Acides Alpha2"].grid(row=4, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Notes_houblon3"] = LabelInput(hops_type, "", input_class=tk.Entry, input_var=tk.StringVar())
-        self.inputs["Notes_houblon3"].grid(row=2, column=1, sticky = (tk.W + tk.E))
+        self.inputs["Acides Alpha3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.IntVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
+        self.inputs["Acides Alpha3"].grid(row=5, column=1, sticky = (tk.W + tk.E))
 
+        self.inputs["Quantité utilisée (gr.)"] = LabelInput(beer_type, "Quantité utilisée (gr.)\n",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 100, "increment": .1})
+        self.inputs["Quantité utilisée (gr.)"].grid(row = 3, column=2, sticky=(tk.W + tk.E))
+
+        self.inputs["Quantité utilisée (gr.)2"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 100, "increment": .1})
+        self.inputs["Quantité utilisée (gr.)2"].grid(row = 4, column=2, sticky=(tk.W + tk.E))
+
+        self.inputs["Quantité utilisée (gr.)3"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 100, "increment": .1})
+        self.inputs["Quantité utilisée (gr.)3"].grid(row = 5, column=2, sticky=(tk.W + tk.E))
+
+        self.inputs["Temps Ebullition"] = LabelInput(beer_type, "Temps Ebullition\n/Densité",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 0.134, "increment": .001})
+        self.inputs["Temps Ebullition"].grid(row = 3, column=3, sticky=(tk.W + tk.E))
+
+        self.inputs["Temps Ebullition2"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 0.134, "increment": .001})
+        self.inputs["Temps Ebullition2"].grid(row = 4, column=3, sticky=(tk.W + tk.E))
+
+        self.inputs["Temps Ebullition3"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 0.134, "increment": .001})
+        self.inputs["Temps Ebullition3"].grid(row = 5, column=3, sticky=(tk.W + tk.E))
         
 
         #default the form
