@@ -76,7 +76,7 @@ class DataRecordForm(tk.Frame):
         record.grid(row=0, column=0, sticky=(tk.W + tk.E))
 
         beer_type = tk.LabelFrame(self, text="Ingrédients - Composition & Répartition")
-        beer_type.grid(row=1, column=0, sticky=(tk.W + tk.E))
+        beer_type.grid(row=0, column=1, sticky=(tk.W + tk.E))
 
         #hops_type = tk.LabelFrame(self, text="Houblon - Détermination de l'amertume")
         #hops_type.grid(row=2, column=0, sticky=(tk.W + tk.E))
@@ -92,25 +92,25 @@ class DataRecordForm(tk.Frame):
         self.inputs["Essai N°"].grid(row=0, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Rdm Instalation"] = LabelInput(record, "Rendement Instalation (%)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values":[70, 75, 80, 85, 90, 95, 100]})
-        self.inputs["Rdm Instalation"].grid(row=0, column=1, sticky = (tk.W + tk.E))
+        self.inputs["Rdm Instalation"].grid(row=1, column=0, sticky = (tk.W + tk.E))
         
         self.inputs["Base Bière"] = LabelInput(record, "Base Bière", input_class=ttk.Combobox, input_var=tk.StringVar() ,input_args={"values":["Claire 80%", "Amber 78%", "Dark 76%"]})
-        self.inputs["Base Bière"].grid(row=0, column=2, sticky = (tk.W + tk.E)) 
+        self.inputs["Base Bière"].grid(row=2, column=0, sticky = (tk.W + tk.E)) 
 
         self.inputs["Couleur en EBC"] = LabelInput(record, "Couleur Recherchée (EBC)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
-        self.inputs["Couleur en EBC"].grid(row=0, column=3, sticky = (tk.W + tk.E))
+        self.inputs["Couleur en EBC"].grid(row=3, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Essai d/h"] = LabelInput(record, "Essai d/h", input_var=tk.StringVar())
-        self.inputs["Essai d/h"].grid(row=1, column=0, sticky = (tk.W + tk.E))
+        #self.inputs["Essai d/h"] = LabelInput(record, "Essai d/h", input_var=tk.StringVar())
+        #self.inputs["Essai d/h"].grid(row=4, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Volume Fin Ebullition"] = LabelInput(record, "Qantité Bière (L)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(10, 51))})
-        self.inputs["Volume Fin Ebullition"].grid(row=1, column=1, sticky = (tk.W + tk.E))
+        self.inputs["Volume Fin Ebullition"].grid(row=5, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Densite de maiche (°P)"] = LabelInput(record, "Densité de Maiche (°P)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(0, 16))})
-        self.inputs["Densite de maiche (°P)"].grid(row=1, column=2, sticky = (tk.W + tk.E))
+        self.inputs["Densite de maiche (°P)"].grid(row=6, column=0, sticky = (tk.W + tk.E))
 
         self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume (IBU)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
-        self.inputs["Amertume en IBU"].grid(row=1, column=3, sticky = (tk.W + tk.E))
+        self.inputs["Amertume en IBU"].grid(row=7, column=0, sticky = (tk.W + tk.E))
 
     
         # Ingrédients - Composition & Répartition ----------------------------------------
@@ -233,8 +233,15 @@ class Application(tk.Tk):
 
 
         # BUTTON to show results
-        self.visual_button = ttk.Button(self, text="Balance", command=self.return_data)
-        self.visual_button.grid(row=2, column=0, sticky = tk.W, padx=10)
+        self.visual_button = ttk.Button(self, text="Valider Base Recette", command=self.return_data)
+        self.visual_button.grid(row=2, sticky = tk.W, padx=10)
+
+        self.balance_button = ttk.Button(self, text="Balance Recette", command=self.return_recette)
+        self.balance_button.grid(sticky=tk.E, row=2, padx=10)
+
+        self.savebutton = ttk.Button(self, text="Save", command=self.on_save)
+        self.savebutton.grid(sticky=(tk.E+tk.W), row=4, padx=10)
+
 
 
         # Label with results-----------------------------------------------------------
@@ -242,19 +249,24 @@ class Application(tk.Tk):
         self.data_set=tk.StringVar()
         self.data_set.set("Chargement...")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
-        self.visual_data.grid(row=3, column=0, sticky=(tk.W+tk.E), padx=10)
+        self.visual_data.grid(row=3, sticky=tk.W, padx=10)
+
+
+        self.balance_set=tk.StringVar()
+        self.balance_set.set("Text balance...")
+        self.balance_data = ttk.Label(self, textvariable=self.balance_set)
+        self.balance_data.grid(sticky=tk.E, row=3, padx=10)
 
         # ------------------------------------------------------------------------------
 
 
 
-        self.savebutton = ttk.Button(self, text="Save", command=self.on_save)
-        self.savebutton.grid(sticky=tk.E, row=4, padx=10)
+
 
         # status bar
         self.status = tk.StringVar()
         self.statusbar = ttk.Label(self, textvariable=self.status)
-        self.statusbar.grid(sticky=(tk.W + tk.E), row=5, padx=10)
+        self.statusbar.grid(sticky=(tk.W + tk.E), row=6, padx=10)
 
         self.records_saved = 0
     
@@ -283,9 +295,9 @@ class Application(tk.Tk):
             self.beer_color = self.ebc_color()
             
 
-            self.data_set.set(f"""Quantité nécessaire de malt: {self.result:.1f}kg.
-Volume d'eau nécessaire au début d'ébullition: {self.start_volume:.1f}litres.
-Volume d'eau nécessaire à l'empatage: {self.water_volume:.1f} litres.
+            self.data_set.set(f"""Quantité nécessaire de malt:\n {self.result:.1f}kg.
+Volume d'eau nécessaire au début\n d'ébullition: {self.start_volume:.1f}litres.
+Volume d'eau nécessaire à l'empatage:\ {self.water_volume:.1f} litres.
 Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.
 Couleur du moût est de {self.beer_color:.1f} EBC.""")
         else:
@@ -328,17 +340,9 @@ Couleur du moût est de {self.beer_color:.1f} EBC.""")
 
         return self.formula_total
 
-        
-
-
-
             
-
-
-
-
-            
-
+    def return_recette(self):
+        pass
 
 
 
