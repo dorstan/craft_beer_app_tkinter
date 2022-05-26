@@ -233,10 +233,10 @@ class Application(tk.Tk):
 
 
         # BUTTON to show results
-        self.visual_button = ttk.Button(self, text="Valider Base Recette", command=self.return_data)
+        self.visual_button = ttk.Button(self, text="Valider Base Recette", command=self.return_recette_base)
         self.visual_button.grid(row=2, sticky = tk.W, padx=10)
 
-        self.balance_button = ttk.Button(self, text="Balance Recette", command=self.return_recette)
+        self.balance_button = ttk.Button(self, text="Check Balance Recette", command=self.return_recette)
         self.balance_button.grid(sticky=tk.E, row=2, padx=10)
 
         self.savebutton = ttk.Button(self, text="Save", command=self.on_save)
@@ -270,37 +270,41 @@ class Application(tk.Tk):
 
         self.records_saved = 0
     
+    
+    def return_recette_base(self):
+        self.recette_base = self.return_data()
+
+        self.data_set.set(f"""Quantité nécessaire de malt:\n {self.recette_base["quantité malt"]:.1f}kg.
+Volume d'eau nécessaire au début\n d'ébullition: {self.recette_base["debut ebullition"]:.1f}litres.
+Volume d'eau nécessaire à l'empatage:\ {self.recette_base["volume empatage"]:.1f} litres.
+Volume d'eau de rinçage à prévoir: {self.recette_base["volume rinçage"]:.1f} litres.""")
+
     def return_data(self):
         """Calculates the formula for grain mass"""
-        if self.recordform.get():
-            for x, y in self.recordform.get().items():
-                if x == "Densite de maiche (°P)":
-                    self.maiche = float(y)
-                elif x == "Volume Fin Ebullition":
-                    self.fin_ebullition = float(y)
-                elif x == "Rdm Instalation":
-                    self.instalation = float(y)
-                elif x == "Base Bière":
-                    if y == "Claire 80%":
-                        self.base_bière = 80
-                    elif y == "Amber 78%":
-                        self.base_bière = 78
-                    else:
-                        self.base_bière = 76
-            self.result = (self.maiche*100*self.fin_ebullition)/(self.instalation*self.base_bière)
-            self.start_volume = self.fin_ebullition * 1.085
-            self.water_volume = self.result * 3
-            self.washing_volume = (self.start_volume-self.water_volume+self.result)*1.2
+        for x, y in self.recordform.get().items():
+            if x == "Densite de maiche (°P)":
+                self.maiche = float(y)
+            elif x == "Volume Fin Ebullition":
+                self.fin_ebullition = float(y)
+            elif x == "Rdm Instalation":
+                self.instalation = float(y)
+            elif x == "Base Bière":
+                if y == "Claire 80%":
+                    self.base_bière = 80
+                elif y == "Amber 78%":
+                    self.base_bière = 78
+                else:
+                    self.base_bière = 76
+        self.result = (self.maiche*100*self.fin_ebullition)/(self.instalation*self.base_bière)
+        self.start_volume = self.fin_ebullition * 1.085
+        self.water_volume = self.result * 3
+        self.washing_volume = (self.start_volume-self.water_volume+self.result)*1.2
 
-            self.beer_color = self.ebc_color()
-            
+        self.result_formula = {"quantité malt": self.result, "debut ebullition": self.start_volume, "volume empatage": self.water_volume, "volume rinçage": self.washing_volume}
+        return self.result_formula
 
-            self.data_set.set(f"""Quantité nécessaire de malt:\n {self.result:.1f}kg.
-Volume d'eau nécessaire au début\n d'ébullition: {self.start_volume:.1f}litres.
-Volume d'eau nécessaire à l'empatage:\ {self.water_volume:.1f} litres.
-Volume d'eau de rinçage à prévoir: {self.washing_volume:.1f} litres.""")
-        else:
-            self.data_set.set("Chargement...")
+
+
 
     def return_recette(self):
         self.ebc_result = self.ebc_color()
