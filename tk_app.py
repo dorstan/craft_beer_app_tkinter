@@ -109,7 +109,7 @@ class DataRecordForm(tk.Frame):
         self.inputs["Densite de maiche (°P)"] = LabelInput(record, "Densité de Maiche (°P)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(0, 16))})
         self.inputs["Densite de maiche (°P)"].grid(row=6, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume (IBU)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
+        self.inputs["Amertume en IBU"] = LabelInput(record, "Amertume Recherché (IBU)", input_class=ttk.Combobox, input_var=tk.IntVar() ,input_args={"values": list(range(1, 80))})
         self.inputs["Amertume en IBU"].grid(row=7, column=0, sticky = (tk.W + tk.E))
 
     
@@ -222,10 +222,10 @@ class Application(tk.Tk):
         self.recordform.grid(row=1, padx=10)
 
         # BUTTON to show results
-        self.visual_button = ttk.Button(self, text="Valider Recette", command=self.return_recette_base)
+        self.visual_button = ttk.Button(self, text="Démarer Recette", command=self.return_recette_base)
         self.visual_button.grid(row=2, sticky = tk.W, padx=10)
 
-        self.balance_button = ttk.Button(self, text="Équilibrer Recette", command=self.return_recette_balance)
+        self.balance_button = ttk.Button(self, text="Balancer Recette", command=self.return_recette_balance)
         self.balance_button.grid(sticky=tk.E, row=2, padx=10)
 
         self.savebutton = ttk.Button(self, text="Sauvegarder", command=self.on_save)
@@ -291,10 +291,31 @@ Volume d'eau de rinçage à prévoir: {self.recette_base["volume rinçage"]:.1f}
     def return_recette_balance(self):
         self.ebc_result = self.ebc_color()
         self.ibu_result = self.ibu_amertume()
-        self.balance_set.set(f"""
-Couleur du moût est de {self.ebc_result:.1f} EBC.
-Valeur de l'amertume est de {self.ibu_result:.2f} IBU
+        self.valeur_base = self.recordform.get()
+
+        self.olista = []
+        self.olista.append(float(self.valeur_base["Couleur en EBC"]) - self.ebc_result)
+        self.olista.append(float(self.valeur_base["Amertume en IBU"]) - self.ibu_result)
+        for number in self.olista:
+            if number > 0.2:
+                self.balance_set.set(f"""
+EBC Recherché: {self.valeur_base["Couleur en EBC"]}    Valeur EBC: {self.ebc_result:.1f}\n
+IBU Recherché: {self.valeur_base["Amertume en IBU"]}     Valeur IBU: {self.ibu_result:.2f}\n
+Veuillez balacer la recette!
         """)
+            elif number < -0.2:
+                self.balance_set.set(f"""
+EBC Recherché: {self.valeur_base["Couleur en EBC"]}    Valeur EBC: {self.ebc_result:.1f}\n
+IBU Recherché: {self.valeur_base["Amertume en IBU"]}     Valeur IBU: {self.ibu_result:.2f}\n
+Veuillez balacer la recette!
+        """)
+            else:
+                self.balance_set.set(f"""
+EBC Recherché: {self.valeur_base["Couleur en EBC"]}    Valeur EBC: {self.ebc_result:.1f}\n
+IBU Recherché: {self.valeur_base["Amertume en IBU"]}     Valeur IBU: {self.ibu_result:.2f}\n
+BALANCE OK!
+        """)
+
 
     def ebc_color(self):
         self.sum_ebc = []
