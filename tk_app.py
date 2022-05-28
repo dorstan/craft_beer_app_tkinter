@@ -161,31 +161,31 @@ class DataRecordForm(tk.Frame):
         self.inputs["Choix du Houblon3"] = LabelInput(beer_type, "", input_class= tk.Entry, input_var=tk.StringVar())
         self.inputs["Choix du Houblon3"].grid(row=5, column=0, sticky = (tk.W + tk.E))
 
-        self.inputs["Acides Alpha"] = LabelInput(beer_type, "Acides Alpha (%)\n", input_class=tk.Spinbox, input_var=tk.IntVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
+        self.inputs["Acides Alpha"] = LabelInput(beer_type, "Acides Alpha (%)\n", input_class=tk.Spinbox, input_var=tk.StringVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
         self.inputs["Acides Alpha"].grid(row=3, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Acides Alpha2"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.IntVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
+        self.inputs["Acides Alpha2"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
         self.inputs["Acides Alpha2"].grid(row=4, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Acides Alpha3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.IntVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
+        self.inputs["Acides Alpha3"] = LabelInput(beer_type, "", input_class=tk.Spinbox, input_var=tk.StringVar() ,input_args={"from_": 1, "to": 100, "increment": .1})
         self.inputs["Acides Alpha3"].grid(row=5, column=1, sticky = (tk.W + tk.E))
 
-        self.inputs["Quantité utilisée (gr.)"] = LabelInput(beer_type, "Quantité utilisée (gr.)\n",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 100, "increment": .1})
+        self.inputs["Quantité utilisée (gr.)"] = LabelInput(beer_type, "Quantité utilisée (gr.)\n",  input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 100, "increment": .1})
         self.inputs["Quantité utilisée (gr.)"].grid(row = 3, column=2, sticky=(tk.W + tk.E))
 
-        self.inputs["Quantité utilisée (gr.)2"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 100, "increment": .1})
+        self.inputs["Quantité utilisée (gr.)2"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 100, "increment": .1})
         self.inputs["Quantité utilisée (gr.)2"].grid(row = 4, column=2, sticky=(tk.W + tk.E))
 
-        self.inputs["Quantité utilisée (gr.)3"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 100, "increment": .1})
+        self.inputs["Quantité utilisée (gr.)3"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 100, "increment": .1})
         self.inputs["Quantité utilisée (gr.)3"].grid(row = 5, column=2, sticky=(tk.W + tk.E))
 
-        self.inputs["Temps Ebullition"] = LabelInput(beer_type, "Temps Ebullition\n/Densité",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 0.134, "increment": .001})
+        self.inputs["Temps Ebullition"] = LabelInput(beer_type, "Temps Ebullition\n/Densité",  input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 0.301, "increment": .001})
         self.inputs["Temps Ebullition"].grid(row = 3, column=3, sticky=(tk.W + tk.E))
 
-        self.inputs["Temps Ebullition2"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 0.134, "increment": .001})
+        self.inputs["Temps Ebullition2"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 0.301, "increment": .001})
         self.inputs["Temps Ebullition2"].grid(row = 4, column=3, sticky=(tk.W + tk.E))
 
-        self.inputs["Temps Ebullition3"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.IntVar(), input_args={"from_": 0, "to": 0.134, "increment": .001})
+        self.inputs["Temps Ebullition3"] = LabelInput(beer_type, "",  input_class=tk.Spinbox, input_var=tk.StringVar(), input_args={"from_": 0, "to": 0.301, "increment": .001})
         self.inputs["Temps Ebullition3"].grid(row = 5, column=3, sticky=(tk.W + tk.E))
         
 
@@ -205,12 +205,6 @@ class DataRecordForm(tk.Frame):
             widget.set('')    
 
 
-
-
-
-    
-
-
 class Application(tk.Tk):
     """Application root window"""
     def __init__(self, *args, **kwargs):
@@ -227,42 +221,30 @@ class Application(tk.Tk):
         self.recordform = DataRecordForm(self)
         self.recordform.grid(row=1, padx=10)
 
-    
-
-
-
-
         # BUTTON to show results
-        self.visual_button = ttk.Button(self, text="Valider Base Recette", command=self.return_recette_base)
+        self.visual_button = ttk.Button(self, text="Valider Recette", command=self.return_recette_base)
         self.visual_button.grid(row=2, sticky = tk.W, padx=10)
 
-        self.balance_button = ttk.Button(self, text="Check Balance Recette", command=self.return_recette)
+        self.balance_button = ttk.Button(self, text="Équilibrer Recette", command=self.return_recette_balance)
         self.balance_button.grid(sticky=tk.E, row=2, padx=10)
 
-        self.savebutton = ttk.Button(self, text="Save", command=self.on_save)
+        self.savebutton = ttk.Button(self, text="Sauvegarder", command=self.on_save)
         self.savebutton.grid(sticky=(tk.E+tk.W), row=4, padx=10)
-
-
 
         # Label with results-----------------------------------------------------------
 
         self.data_set=tk.StringVar()
-        self.data_set.set("Chargement...")
+        self.data_set.set("chargement...")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
         self.visual_data.grid(row=3, sticky=(tk.W+tk.N), padx=10)
 
 
         self.balance_set=tk.StringVar()
-        self.balance_set.set("Text balance...")
+        self.balance_set.set("chargement...")
         self.balance_data = ttk.Label(self, textvariable=self.balance_set)
         self.balance_data.grid(sticky=(tk.E+tk.N), row=3, padx=10)
 
         # ------------------------------------------------------------------------------
-
-
-
-
-
         # status bar
         self.status = tk.StringVar()
         self.statusbar = ttk.Label(self, textvariable=self.status)
@@ -306,9 +288,13 @@ Volume d'eau de rinçage à prévoir: {self.recette_base["volume rinçage"]:.1f}
 
 
 
-    def return_recette(self):
+    def return_recette_balance(self):
         self.ebc_result = self.ebc_color()
-        self.balance_set.set(f"Couleur du moût est de {self.ebc_result:.1f} EBC.")
+        self.ibu_result = self.ibu_amertume()
+        self.balance_set.set(f"""
+Couleur du moût est de {self.ebc_result:.1f} EBC.
+Valeur de l'amertume est de {self.ibu_result:.2f} IBU
+        """)
 
     def ebc_color(self):
         self.sum_ebc = []
@@ -346,6 +332,41 @@ Volume d'eau de rinçage à prévoir: {self.recette_base["volume rinçage"]:.1f}
         self.formula_total = self.formula_total * self.multiplicator/self.fin_ebullition
 
         return self.formula_total
+
+    def ibu_amertume(self):
+        """Calculates the bitterness of the beer"""
+        self.list_formula_ibu_quantity = []
+        self.dict_data_ibu = {}
+        
+        for dict_key, dict_value in self.recordform.get().items():
+            self.dict_data_ibu[dict_key] = dict_value
+            if dict_key == "Volume Fin Ebullition":
+                self.volume_beer = float(dict_value)
+
+        self.list_ibu_amertume = ["Acides Alpha", "Acides Alpha2", "Acides Alpha3"]
+        self.list_ibu_amertume2 = ["Quantité utilisée (gr.)", "Quantité utilisée (gr.)2", "Quantité utilisée (gr.)3"]
+        self.list_ibu_amertume3 = ["Temps Ebullition", "Temps Ebullition2", "Temps Ebullition3"]
+
+        for r1, r2, r3 in zip(self.list_ibu_amertume, self.list_ibu_amertume2, self.list_ibu_amertume3):
+            if self.dict_data_ibu[r1] != "":
+                if self.dict_data_ibu[r2] != "":
+                    if self.dict_data_ibu[r3] != "":
+                        self.result_ibu_amertume = float(self.dict_data_ibu[r1]) * float(self.dict_data_ibu[r2]) * float(self.dict_data_ibu[r3])
+                        self.list_formula_ibu_quantity.append(self.result_ibu_amertume * 10 / self.volume_beer)
+            else: pass
+                
+        self.aau_formula = mt.fsum(self.list_formula_ibu_quantity)
+        return self.aau_formula
+
+
+
+        
+        
+
+    
+
+
+
 
             
 
