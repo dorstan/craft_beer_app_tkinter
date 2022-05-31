@@ -216,7 +216,7 @@ class Application(tk.Tk):
 
 
         # 3 Buttons 
-        self.visual_button = ttk.Button(self, text="Démarer Recette de Base", command=self.return_recette_base)
+        self.visual_button = ttk.Button(self, text=f"{'':>4}Démarer Recette de Base{'':>4}", command=self.return_recette_base)
         self.visual_button.grid(row=2, sticky = tk.W, padx=10)
 
         self.balance_button = ttk.Button(self, text="Balancer Recette", command=self.return_recette_balance)
@@ -229,7 +229,7 @@ class Application(tk.Tk):
         # 4 Labels
         #self.data_set displays the base recipe
         self.data_set=tk.StringVar()
-        self.data_set.set(f"""{'':>60}\n\n\n\n\n\n\n\n""")
+        self.data_set.set(f"""{'':>59}\n\n\n\n\n\n\n\n""")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
         self.visual_data.grid(row=3, sticky=(tk.W+tk.N), padx=10)
 
@@ -378,8 +378,8 @@ Amertume Actuelle{'': >13}IBU: {self.ibu_result:.1f}
     
     def on_save(self):
         """Handles save button clicks"""
-        datestring = datetime.today().strftime("%Y-%m-%d")
-        filename = "/Users/dorinstanchescu/Kode/craft_beer_app_tkinter/beer_log{}.csv".format(datestring)
+        #datestring = datetime.today().strftime("%Y-%m-%d")
+        filename = "./beer_log.csv"
         newfile = not os.path.exists(filename)
 
         data = self.recordform.get()
@@ -390,10 +390,11 @@ Amertume Actuelle{'': >13}IBU: {self.ibu_result:.1f}
                 csvwriter.writeheader()
             csvwriter.writerow(data)
 
-        self.records_saved += 1
         self.status.set(
-            "La recette no.{} a été sauveguardée".format(self.records_saved))
+            "La recette a été sauveguardée")
         self.recordform.reset()
+        self.data_set.set(f"""{'':>60}\n\n\n\n\n\n\n\n""")
+        self.balance_set.set(f"""{'':>60}\n\n\n\n\n\n\n\n""")
 
 if __name__ == "__main__":
     app = Application()
