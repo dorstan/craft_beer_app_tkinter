@@ -234,13 +234,13 @@ class Application(tk.Tk):
         # Label with results-----------------------------------------------------------
 
         self.data_set=tk.StringVar()
-        self.data_set.set("chargement...")
+        self.data_set.set(f"""{'':>60}\n\n\n\n\n\n\n""")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
         self.visual_data.grid(row=3, sticky=(tk.W+tk.N), padx=10)
 
 
         self.balance_set=tk.StringVar()
-        self.balance_set.set("chargement...")
+        self.balance_set.set(f"""{'':>60}\n\n\n\n\n\n\n""")
         self.balance_data = ttk.Label(self, textvariable=self.balance_set)
         self.balance_data.grid(sticky=(tk.E+tk.N), row=3, padx=10)
 
@@ -256,10 +256,11 @@ class Application(tk.Tk):
     def return_recette_base(self):
         self.recette_base = self.return_data()
 
-        self.data_set.set(f"""Quantité nécessaire de malt:\n {self.recette_base["quantité malt"]:.1f}kg.
-Volume d'eau nécessaire au début\n d'ébullition: {self.recette_base["debut ebullition"]:.1f}litres.
-Volume d'eau nécessaire à l'empatage:\ {self.recette_base["volume empatage"]:.1f} litres.
-Volume d'eau de rinçage à prévoir: {self.recette_base["volume rinçage"]:.1f} litres.""")
+        self.data_set.set(f"""Quantité Malt:{'': >25}{self.recette_base["quantité malt"]:.1f} kg\n
+Volume Eau Début Ebullition: {self.recette_base["debut ebullition"]:.1f} l\n
+Volume Eau Empatage:{'': >13}{self.recette_base["volume empatage"]:.1f} l \n
+Volume Eau Rinçage:{'': >15}{self.recette_base["volume rinçage"]:.1f} l
+        """)
 
     def return_data(self):
         """Calculates the formula for grain mass"""
@@ -299,21 +300,27 @@ Volume d'eau de rinçage à prévoir: {self.recette_base["volume rinçage"]:.1f}
         for number in self.olista:
             if number > 0.2:
                 self.balance_set.set(f"""
-EBC Recherché: {self.valeur_base["Couleur en EBC"]}    Valeur EBC: {self.ebc_result:.1f}\n
-IBU Recherché: {self.valeur_base["Amertume en IBU"]}     Valeur IBU: {self.ibu_result:.2f}\n
-Veuillez balacer la recette!
+{'':>8}Veuillez équilibrer la recette\n
+Couleur Recherchée{'': >10}EBC: {self.valeur_base["Couleur en EBC"]}
+Couleur Actuelle{'': >16}EBC: {self.ebc_result:.1f}\n
+Amertume Recherchée{'': >6}IBU: {self.valeur_base["Amertume en IBU"]}
+Amertume Actuelle{'': >12}IBU: {self.ibu_result:.1f}
         """)
             elif number < -0.2:
                 self.balance_set.set(f"""
-EBC Recherché: {self.valeur_base["Couleur en EBC"]}    Valeur EBC: {self.ebc_result:.1f}\n
-IBU Recherché: {self.valeur_base["Amertume en IBU"]}     Valeur IBU: {self.ibu_result:.2f}\n
-Veuillez balacer la recette!
+{'':>8}Veuillez équilibrer la recette\n
+Couleur Recherchée{'': >10}EBC: {self.valeur_base["Couleur en EBC"]}
+Couleur Actuelle{'': >16}EBC: {self.ebc_result:.1f}\n
+Amertume Recherchée{'': >6}IBU: {self.valeur_base["Amertume en IBU"]}
+Amertume Actuelle{'': >12}IBU: {self.ibu_result:.1f}
         """)
             else:
                 self.balance_set.set(f"""
-EBC Recherché: {self.valeur_base["Couleur en EBC"]}    Valeur EBC: {self.ebc_result:.1f}\n
-IBU Recherché: {self.valeur_base["Amertume en IBU"]}     Valeur IBU: {self.ibu_result:.2f}\n
-BALANCE OK!
+{'':>13}BIÈRE ÉQUILIBRÉE\n
+Couleur Recherchée{'': >10}EBC: {self.valeur_base["Couleur en EBC"]}
+Couleur Actuelle{'': >16}EBC: {self.ebc_result:.1f}\n
+Amertume Recherchée{'': >6}IBU: {self.valeur_base["Amertume en IBU"]}
+Amertume Actuelle{'': >12}IBU: {self.ibu_result:.1f}
         """)
 
 
