@@ -222,7 +222,7 @@ class Application(tk.Tk):
         self.recordform.grid(row=1, padx=10)
 
         # BUTTON to show results
-        self.visual_button = ttk.Button(self, text="Démarer Recette", command=self.return_recette_base)
+        self.visual_button = ttk.Button(self, text="Démarer Recette de Base", command=self.return_recette_base)
         self.visual_button.grid(row=2, sticky = tk.W, padx=10)
 
         self.balance_button = ttk.Button(self, text="Balancer Recette", command=self.return_recette_balance)
@@ -234,13 +234,13 @@ class Application(tk.Tk):
         # Label with results-----------------------------------------------------------
 
         self.data_set=tk.StringVar()
-        self.data_set.set(f"""{'':>60}\n\n\n\n\n\n\n""")
+        self.data_set.set(f"""{'':>60}\n\n\n\n\n\n\n\n""")
         self.visual_data = ttk.Label(self, textvariable=self.data_set)
         self.visual_data.grid(row=3, sticky=(tk.W+tk.N), padx=10)
 
 
         self.balance_set=tk.StringVar()
-        self.balance_set.set(f"""{'':>60}\n\n\n\n\n\n\n""")
+        self.balance_set.set(f"""{'':>60}\n\n\n\n\n\n\n\n""")
         self.balance_data = ttk.Label(self, textvariable=self.balance_set)
         self.balance_data.grid(sticky=(tk.E+tk.N), row=3, padx=10)
 
@@ -256,10 +256,12 @@ class Application(tk.Tk):
     def return_recette_base(self):
         self.recette_base = self.return_data()
 
-        self.data_set.set(f"""Quantité Malt:{'': >25}{self.recette_base["quantité malt"]:.1f} kg\n
-Volume Eau Début Ebullition: {self.recette_base["debut ebullition"]:.1f} l\n
-Volume Eau Empatage:{'': >13}{self.recette_base["volume empatage"]:.1f} l \n
-Volume Eau Rinçage:{'': >15}{self.recette_base["volume rinçage"]:.1f} l
+        self.data_set.set(f"""
+{'':>11}RECETTE DE BASE\n
+Quantité Malt:{'': >25}{self.recette_base["quantité malt"]:.1f} kg
+Volume Eau Début Ebullition: {self.recette_base["debut ebullition"]:.1f} l
+Volume Eau Empatage:{'': >13}{self.recette_base["volume empatage"]:.1f} l
+Volume Eau Rinçage:{'': >15}{self.recette_base["volume rinçage"]:.1f} l\n
         """)
 
     def return_data(self):
@@ -300,28 +302,28 @@ Volume Eau Rinçage:{'': >15}{self.recette_base["volume rinçage"]:.1f} l
         for number in self.olista:
             if number > 0.2:
                 self.balance_set.set(f"""
-{'':>8}Veuillez équilibrer la recette\n
-Couleur Recherchée{'': >10}EBC: {self.valeur_base["Couleur en EBC"]}
-Couleur Actuelle{'': >16}EBC: {self.ebc_result:.1f}\n
-Amertume Recherchée{'': >6}IBU: {self.valeur_base["Amertume en IBU"]}
-Amertume Actuelle{'': >12}IBU: {self.ibu_result:.1f}
-        """)
+VEUILLEZ ÉQUILIBRER LA RECETTE\n
+Couleur Recherchée{'': >11}EBC: {self.valeur_base["Couleur en EBC"]}
+Couleur Actuelle{'': >17}EBC: {self.ebc_result:.1f}\n
+Amertume Recherchée{'': >7}IBU: {self.valeur_base["Amertume en IBU"]}
+Amertume Actuelle{'': >13}IBU: {self.ibu_result:.1f}
+""")
             elif number < -0.2:
                 self.balance_set.set(f"""
-{'':>8}Veuillez équilibrer la recette\n
-Couleur Recherchée{'': >10}EBC: {self.valeur_base["Couleur en EBC"]}
-Couleur Actuelle{'': >16}EBC: {self.ebc_result:.1f}\n
-Amertume Recherchée{'': >6}IBU: {self.valeur_base["Amertume en IBU"]}
-Amertume Actuelle{'': >12}IBU: {self.ibu_result:.1f}
-        """)
+{'':>5}VEUILLEZ ÉQUILIBRER LA RECETTE\n
+Couleur Recherchée{'': >11}EBC: {self.valeur_base["Couleur en EBC"]}
+Couleur Actuelle{'': >17}EBC: {self.ebc_result:.1f}\n
+Amertume Recherchée{'': >7}IBU: {self.valeur_base["Amertume en IBU"]}
+Amertume Actuelle{'': >13}IBU: {self.ibu_result:.1f}
+""")
             else:
                 self.balance_set.set(f"""
-{'':>13}BIÈRE ÉQUILIBRÉE\n
-Couleur Recherchée{'': >10}EBC: {self.valeur_base["Couleur en EBC"]}
-Couleur Actuelle{'': >16}EBC: {self.ebc_result:.1f}\n
-Amertume Recherchée{'': >6}IBU: {self.valeur_base["Amertume en IBU"]}
-Amertume Actuelle{'': >12}IBU: {self.ibu_result:.1f}
-        """)
+{'':>11}BIÈRE ÉQUILIBRÉE\n
+Couleur Recherchée{'': >11}EBC: {self.valeur_base["Couleur en EBC"]}
+Couleur Actuelle{'': >17}EBC: {self.ebc_result:.1f}\n
+Amertume Recherchée{'': >7}IBU: {self.valeur_base["Amertume en IBU"]}
+Amertume Actuelle{'': >13}IBU: {self.ibu_result:.1f}
+""")
 
 
     def ebc_color(self):
