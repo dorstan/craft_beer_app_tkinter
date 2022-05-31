@@ -2,11 +2,13 @@
 
 from datetime import datetime
 import os
+from os import path
 import csv
 from sqlite3 import Date
 import tkinter as tk
 from tkinter import RAISED, ttk
 import math as mt
+from images import BEER_APP_LOGO
 
 class LabelInput(tk.Frame):
     """This class contains label and input together."""
@@ -205,9 +207,9 @@ class Application(tk.Tk):
         #self.resizable(width=False, height=False)
 
       
-        # 1 Label containing the name of the app
-        self.label = ttk.Label(self, text="Bière Artisanale", font=("TkDefaultFont", 16))
-        self.label.grid(row=0, padx=10)
+        # 1 Label containing the logo of the app
+        self.logo = tk.PhotoImage(file=BEER_APP_LOGO)
+        tk.Label(self, image=self.logo).grid(row=0)
         
 
         # 2 Frame containing widgets class
